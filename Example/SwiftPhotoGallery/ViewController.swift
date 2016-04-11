@@ -47,11 +47,18 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
         return imageNames.count
     }
 
-    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
-
-        return UIImage(named: imageNames[forIndex])
+    func imageInGallery(gallery: SwiftPhotoGallery, forIndex index: Int) -> UIImage? {
+        if index == 1 {
+            // use for test placeholder
+            return nil
+        }
+        return UIImage(named: imageNames[index])
     }
-
+    
+    func placeHolderInGallery(gallery: SwiftPhotoGallery, forIndex index: Int) -> String? {
+        return "Image Not Found"
+    }
+    
     // MARK: SwiftPhotoGalleryDelegate Methods
 
     func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
