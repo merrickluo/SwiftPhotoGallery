@@ -10,7 +10,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
 
     var image:UIImage? {
         didSet {
-            configureForNewImage()
+            configureForNewImage(true)
         }
     }
 
@@ -62,16 +62,17 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
 
-    internal func configureForNewImage() {
+    internal func configureForNewImage(animted: Bool) {
         imageView.image = image
         imageView.sizeToFit()
-        imageView.alpha = 0.0
 
         setZoomScale()
         scrollViewDidZoom(scrollView)
-        
-        UIView.animateWithDuration(0.5) {
-            self.imageView.alpha = 1.0
+        if animted {
+            imageView.alpha = 0.0
+            UIView.animateWithDuration(0.5) {
+                self.imageView.alpha = 1.0
+            }
         }
     }
     

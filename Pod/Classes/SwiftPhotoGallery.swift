@@ -115,7 +115,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
 
         if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
-            currentCell.configureForNewImage()
+            currentCell.configureForNewImage(false)
         }
         
     }
