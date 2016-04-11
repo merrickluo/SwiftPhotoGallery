@@ -38,7 +38,7 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
     }
 
     @IBAction func didPressShowMeButton(sender:AnyObject) {
-        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
+        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self, showPageControl: false)
 
         presentViewController(gallery, animated: true, completion: nil)
     }

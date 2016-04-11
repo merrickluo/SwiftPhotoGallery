@@ -12,7 +12,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
         super.setUp()
 
         testHelper = SwiftPhotoGalleryTestHelper()
-        testGallery = SwiftPhotoGallery(delegate: testHelper, dataSource: testHelper)
+        testGallery = SwiftPhotoGallery(delegate: testHelper, dataSource: testHelper, showPageControl: false)
     }
 
     override func tearDown() {
