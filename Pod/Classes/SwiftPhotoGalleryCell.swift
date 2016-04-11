@@ -13,9 +13,16 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
             configureForNewImage(true)
         }
     }
+    
+    var placeHoderText: String? {
+        didSet {
+            configureForPlaceHolder()
+        }
+    }
 
     private var scrollView: UIScrollView
     private let imageView: UIImageView
+    private let placeHolderLabel: UILabel
 
     override init(frame: CGRect) {
 
@@ -23,10 +30,13 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         scrollView = UIScrollView(frame: frame)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        placeHolderLabel = UILabel(frame: frame)
+        placeHolderLabel.translatesAutoresizingMaskIntoConstraints = false
 
         super.init(frame: frame)
         var scrollViewConstraints: [NSLayoutConstraint] = []
         var imageViewConstraints: [NSLayoutConstraint] = []
+        var placeHolderConstraints: [NSLayoutConstraint] = []
 
         scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Leading, relatedBy: .Equal, toItem: contentView, attribute: .Leading, multiplier: 1, constant: 0))
         scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Top, relatedBy: .Equal, toItem: contentView, attribute: .Top, multiplier: 1, constant: 0))
@@ -45,6 +55,20 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         scrollView.addConstraints(imageViewConstraints)
 
         scrollView.delegate = self
+        
+        placeHolderLabel.backgroundColor = UIColor.blackColor()
+        placeHolderLabel.textColor = UIColor.whiteColor()
+        placeHolderLabel.font = UIFont.systemFontOfSize(18)
+        placeHolderLabel.hidden = true
+        placeHolderLabel.textAlignment = .Center
+        
+        placeHolderConstraints.append(NSLayoutConstraint(item: placeHolderLabel, attribute: .Leading, relatedBy: .Equal, toItem: contentView, attribute: .Leading, multiplier: 1, constant: 0))
+        placeHolderConstraints.append(NSLayoutConstraint(item: placeHolderLabel, attribute: .Top, relatedBy: .Equal, toItem: contentView, attribute: .Top, multiplier: 1, constant: 0))
+        placeHolderConstraints.append(NSLayoutConstraint(item: placeHolderLabel, attribute: .Trailing, relatedBy: .Equal, toItem: contentView, attribute: .Trailing, multiplier: 1, constant: 0))
+        placeHolderConstraints.append(NSLayoutConstraint(item: placeHolderLabel, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 1, constant: 0))
+        
+        contentView.addSubview(placeHolderLabel)
+        contentView.addConstraints(placeHolderConstraints)
 
         setupGestureRecognizer()
     }
@@ -63,6 +87,8 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
     }
 
     internal func configureForNewImage(animted: Bool) {
+        scrollView.hidden = false
+        placeHolderLabel.hidden = true
         imageView.image = image
         imageView.sizeToFit()
 
@@ -74,6 +100,12 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
                 self.imageView.alpha = 1.0
             }
         }
+    }
+    
+    internal func configureForPlaceHolder() {
+        scrollView.hidden = true
+        placeHolderLabel.hidden = false
+        placeHolderLabel.text = placeHoderText
     }
     
 

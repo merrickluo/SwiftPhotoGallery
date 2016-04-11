@@ -11,7 +11,8 @@ import UIKit
 
 @objc public protocol SwiftPhotoGalleryDataSource {
     func numberOfImagesInGallery(gallery:SwiftPhotoGallery) -> Int
-    func imageInGallery(gallery:SwiftPhotoGallery, forIndex:Int) -> UIImage?
+    func imageInGallery(gallery:SwiftPhotoGallery, forIndex index:Int) -> UIImage?
+    func placeHolderInGallery(gallery: SwiftPhotoGallery, forIndex index: Int) -> String?
 }
 
 @objc public protocol SwiftPhotoGalleryDelegate {
@@ -160,8 +161,12 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
-
-        cell.image = getImage(indexPath.row)
+        
+        if let image = getImage(indexPath.row) {
+            cell.image = image
+        } else {
+            cell.placeHoderText = getPlaceHolderText(indexPath.row)
+        }
 
         return cell
     }
@@ -285,11 +290,13 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: withIndex, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: animated)
     }
 
-    private func getImage(currentPage: Int) -> UIImage {
-        let imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
-        return imageForPage!
+    private func getImage(currentPage: Int) -> UIImage? {
+        return dataSource?.imageInGallery(self, forIndex: currentPage)
     }
     
+    private func getPlaceHolderText(currentPage: Int) -> String? {
+        return dataSource?.placeHolderInGallery(self, forIndex: currentPage)
+    }
 
 }
 

@@ -168,6 +168,10 @@ class SwiftPhotoGalleryTestHelper: SwiftPhotoGalleryDelegate, SwiftPhotoGalleryD
 
         return UIImage(named: imageNames[forIndex])
     }
+    
+    @objc func placeHolderInGallery(gallery: SwiftPhotoGallery, forIndex index: Int) -> String? {
+        return nil
+    }
 
     @objc func galleryDidTapToClose(gallery:SwiftPhotoGallery) {
         didTellDelegateTapToClose = true
